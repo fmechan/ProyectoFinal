@@ -51,12 +51,13 @@ public class FrmMenu extends javax.swing.JFrame {
         mnuAdministracion = new javax.swing.JMenu();
         itemRoles = new javax.swing.JMenuItem();
         itemUsuarios = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         mnuGestion = new javax.swing.JMenu();
         itemMarcas = new javax.swing.JMenuItem();
         itemModelos = new javax.swing.JMenuItem();
         itemAutos = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        itemClientes = new javax.swing.JMenuItem();
+        itemMediodePago = new javax.swing.JMenuItem();
         mnuReportes = new javax.swing.JMenu();
         mnuSistema = new javax.swing.JMenu();
         itemSalir = new javax.swing.JMenuItem();
@@ -87,6 +88,15 @@ public class FrmMenu extends javax.swing.JFrame {
             }
         });
         mnuAdministracion.add(itemUsuarios);
+
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/servicio-al-cliente.png"))); // NOI18N
+        jMenuItem1.setText("VENDEDOR");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        mnuAdministracion.add(jMenuItem1);
 
         jMenuBar1.add(mnuAdministracion);
 
@@ -120,23 +130,23 @@ public class FrmMenu extends javax.swing.JFrame {
         });
         mnuGestion.add(itemAutos);
 
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/gestion-de-equipos.png"))); // NOI18N
-        jMenuItem1.setText("Clientes");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        itemClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/gestion-de-equipos.png"))); // NOI18N
+        itemClientes.setText("Clientes");
+        itemClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                itemClientesActionPerformed(evt);
             }
         });
-        mnuGestion.add(jMenuItem1);
+        mnuGestion.add(itemClientes);
 
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/pago-en-linea.png"))); // NOI18N
-        jMenuItem2.setText("Medio de Pago");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        itemMediodePago.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/pago-en-linea.png"))); // NOI18N
+        itemMediodePago.setText("Medio de Pago");
+        itemMediodePago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                itemMediodePagoActionPerformed(evt);
             }
         });
-        mnuGestion.add(jMenuItem2);
+        mnuGestion.add(itemMediodePago);
 
         jMenuBar1.add(mnuGestion);
 
@@ -227,19 +237,26 @@ public class FrmMenu extends javax.swing.JFrame {
         
     }//GEN-LAST:event_itemSalirActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void itemClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemClientesActionPerformed
         
         FrmListadoClientes modelos = new FrmListadoClientes();
         modelos.setVisible(true);
         
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_itemClientesActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void itemMediodePagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMediodePagoActionPerformed
       
         
          FrmListadoMediopago modelos = new FrmListadoMediopago();
         modelos.setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_itemMediodePagoActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        
+        FrmListadoVendedor modelos = new FrmListadoVendedor();
+        modelos.setVisible(true);
+        
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -279,7 +296,9 @@ public class FrmMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem itemAutos;
+    private javax.swing.JMenuItem itemClientes;
     private javax.swing.JMenuItem itemMarcas;
+    private javax.swing.JMenuItem itemMediodePago;
     private javax.swing.JMenuItem itemModelos;
     private javax.swing.JMenuItem itemRoles;
     private javax.swing.JMenuItem itemSalir;
@@ -288,7 +307,6 @@ public class FrmMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JLabel lblUsuarios;
     private javax.swing.JMenu mnuAdministracion;
     private javax.swing.JMenu mnuGestion;

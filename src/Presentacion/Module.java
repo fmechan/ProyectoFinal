@@ -7,6 +7,7 @@ package Presentacion;
 import Negocio.EClientes;
 import Negocio.EMedioPago;
 import Negocio.ERoles;
+import Negocio.EVendedor;
 
 /**
  *
@@ -23,6 +24,7 @@ public class Module {
     public static ERoles rol = new ERoles();
     public static EClientes cli = new EClientes();
     public static EMedioPago mediopago = new EMedioPago();
+    public static EVendedor ven = new EVendedor();
     public static int id;
     public static EForm formActive = new EForm();
     public static EFormCart itemCart = new EFormCart();

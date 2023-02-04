@@ -5,13 +5,10 @@
 package Modelo;
 
 import AccesoDatos.Conexion;
-import Negocio.EClientes;
 import Negocio.EComboBox;
-import Negocio.ERoles;
 import Negocio.EVendedor;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
