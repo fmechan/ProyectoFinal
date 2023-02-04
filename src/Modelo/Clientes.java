@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package Modelo;
-
+// mechan chavesta
 import AccesoDatos.Conexion;
 import Negocio.EClientes;
 import java.sql.CallableStatement;
