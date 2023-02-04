@@ -6,8 +6,11 @@
 package Presentacion;
 
 import Modelo.Clientes;
+import Modelo.Roles;
 import Negocio.EClientes;
+import Negocio.ERoles;
 import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
