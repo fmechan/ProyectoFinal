@@ -29,6 +29,10 @@ public class FrmListadoUsuarios extends javax.swing.JFrame implements IFormActiv
      */
     public FrmListadoUsuarios() {
         initComponents();
+        
+          this.setTitle("USUARIOS");
+          
+          
         this.setLocationRelativeTo(this);
         this.setResizable(false);
         

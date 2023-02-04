@@ -33,6 +33,8 @@ public class FrmListadoRoles extends javax.swing.JFrame implements IFormActive {
 
     public FrmListadoRoles() {
         initComponents();
+        
+          this.setTitle("ROLES DE USUARIO");
         this.setLocationRelativeTo(this);
 
         this.defaultTable.addColumn("Id");
