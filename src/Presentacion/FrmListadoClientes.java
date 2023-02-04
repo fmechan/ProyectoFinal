@@ -162,6 +162,14 @@ public class FrmListadoClientes extends javax.swing.JFrame implements IFormActiv
         });
 
         tblClientes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
         tblClientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblClientesMouseClicked(evt);
