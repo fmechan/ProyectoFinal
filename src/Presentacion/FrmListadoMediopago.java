@@ -27,6 +27,7 @@ public class FrmListadoMediopago extends javax.swing.JFrame implements IFormActi
      */
     public FrmListadoMediopago() {
         initComponents();
+         this.setTitle("MEDIO DE PAGO");
         this.setLocationRelativeTo(this);
         this.setResizable(false);
         
