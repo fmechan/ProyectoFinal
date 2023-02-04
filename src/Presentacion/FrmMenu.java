@@ -129,6 +129,7 @@ public class FrmMenu extends javax.swing.JFrame {
         });
         mnuGestion.add(jMenuItem1);
 
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/pago-en-linea.png"))); // NOI18N
         jMenuItem2.setText("Medio de Pago");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
