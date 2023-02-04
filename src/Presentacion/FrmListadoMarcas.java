@@ -28,7 +28,7 @@ public class FrmListadoMarcas extends javax.swing.JFrame implements IFormActive{
     public FrmListadoMarcas() {
         initComponents();
         
-          this.setTitle("MARCAS");
+          this.setTitle("MARCAS DE AUTOS");
         this.setLocationRelativeTo(this);
         this.setResizable(false);
         

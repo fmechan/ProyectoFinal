@@ -29,6 +29,8 @@ public class FrmListadoAutos extends javax.swing.JFrame implements IFormActive{
      */
     public FrmListadoAutos() {
         initComponents();
+        
+         this.setTitle("AUTOS");
         this.setLocationRelativeTo(this);
         this.setResizable(false);
         

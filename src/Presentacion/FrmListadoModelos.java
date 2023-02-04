@@ -30,6 +30,8 @@ public class FrmListadoModelos extends javax.swing.JFrame implements IFormActive
      */
     public FrmListadoModelos() {
         initComponents();
+        
+         this.setTitle("MODELOS DE AUTOS");
         this.setLocationRelativeTo(this);
         this.setResizable(false);
         
