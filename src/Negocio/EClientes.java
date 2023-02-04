@@ -6,7 +6,7 @@ package Negocio;
 
 /**
  *
- * @author LUIS GUIVAR
+ * @author Usuario
  */
 public class EClientes {
  
