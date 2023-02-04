@@ -6,42 +6,40 @@
 package Presentacion;
 
 import Modelo.Clientes;
-import Modelo.Roles;
+import Modelo.Usuarios;
 import Negocio.EClientes;
-import Negocio.ERoles;
+import Negocio.EUsuarios;
 import java.util.ArrayList;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-import java.awt.Color;
-import javax.swing.BorderFactory;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
 
 
-public class FrmListadoClientes extends javax.swing.JFrame implements IFormActive {
+public class FrmListadoClientes extends javax.swing.JFrame implements IFormActive{
     
-    /**
-     * Creates new form FrmListadoRoles
-     */
+    Clientes clsCli = new Clientes();
+    
     DefaultTableModel defaultTable =new DefaultTableModel(){
         @Override
         public boolean isCellEditable(int row, int column) {
             return false;
         }
     };  
-   
+    /**
+     * Creates new form FrmListadoUsuarios
+     */
     public FrmListadoClientes() {
         initComponents();
         
-         this.setTitle("Clientes");
+          this.setTitle("USUARIOS");
+          
+          
         this.setLocationRelativeTo(this);
+        this.setResizable(false);
         
         this.defaultTable.addColumn("Id");
+        this.defaultTable.addColumn("Tipo Cliente");
         this.defaultTable.addColumn("Tipo Documento");
         this.defaultTable.addColumn("Numero Documento");
         this.defaultTable.addColumn("Nombres");
@@ -50,12 +48,12 @@ public class FrmListadoClientes extends javax.swing.JFrame implements IFormActiv
         this.defaultTable.addColumn("Fecha Nacimiento");
         this.defaultTable.addColumn("Direccion");
         this.defaultTable.addColumn("Telefono");
-    
-        this.tblClientes.setModel(defaultTable);
+        this.tblUsuarios.setModel(defaultTable);
         
-        TableColumnModel columnModel = tblClientes.getColumnModel();
+        tblUsuarios.setRowHeight(25);
+        TableColumnModel columnModel = tblUsuarios.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(15);
-        columnModel.getColumn(1).setPreferredWidth(180);
+        columnModel.getColumn(1).setPreferredWidth(50);
         columnModel.getColumn(2).setPreferredWidth(50);
         columnModel.getColumn(3).setPreferredWidth(50);
         columnModel.getColumn(4).setPreferredWidth(50);
@@ -63,64 +61,47 @@ public class FrmListadoClientes extends javax.swing.JFrame implements IFormActiv
         columnModel.getColumn(6).setPreferredWidth(50);
         columnModel.getColumn(7).setPreferredWidth(50);
         columnModel.getColumn(8).setPreferredWidth(50);
-        tblClientes.setRowHeight(50);
-        
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        columnModel.getColumn(8).setCellRenderer(centerRenderer);
+        columnModel.getColumn(9).setPreferredWidth(50);
         
         loadTable();
-        
-        Border line = BorderFactory.createLineBorder(Color.DARK_GRAY);
-        Border empty = new EmptyBorder(0, 10, 0, 0);
-        CompoundBorder border = new CompoundBorder(line, empty);
-        txtSearch.setBorder(border);
     }
     
-    /*@Override
-    public void updateList(String name){
-        System.out.println("Hola: "+name);
-        //this.txtSearch.setText(name);
-    }*/
-
-    /**
-     *
-     */
-
-    
     @Override
-    public final void loadTable(){
+    public void loadTable()
+    {
         try{
             
             for (int i=this.defaultTable.getRowCount()-1;i>=0;i--){
                 this.defaultTable.removeRow(i);
             }
             
-            Clientes clsCli = new Clientes();
             ArrayList arrayList = clsCli.getAll();
             
             for (int i = 0; i < arrayList.size(); i++) {
                 EClientes cliente = (EClientes)arrayList.get(i);
                 this.defaultTable.addRow(new Object[]{});
                 this.defaultTable.setValueAt(cliente.getId(), i, 0);
-                this.defaultTable.setValueAt(cliente.getTipo_documento(), i, 1);
-                this.defaultTable.setValueAt(cliente.getNum_documento(), i, 2);
-                this.defaultTable.setValueAt(cliente.getNombres(), i, 3);
-                this.defaultTable.setValueAt(cliente.getApellidos(), i, 4);
-                this.defaultTable.setValueAt(cliente.getGenero(), i, 5);
-                this.defaultTable.setValueAt(cliente.getFecha_nac(), i, 6);
-                this.defaultTable.setValueAt(cliente.getDireccion(), i, 7);
-                this.defaultTable.setValueAt(cliente.getTelefono(), i, 8);
+                this.defaultTable.setValueAt(cliente.getTipo_cliente(), i, 1);
+                this.defaultTable.setValueAt(cliente.getTipo_documento(), i, 2);
+                this.defaultTable.setValueAt(cliente.getNum_documento(), i, 3);
+                this.defaultTable.setValueAt(cliente.getNombres(), i, 4);
+                this.defaultTable.setValueAt(cliente.getApellidos(), i, 5);
+                this.defaultTable.setValueAt(cliente.getGenero(), i, 6);
+                this.defaultTable.setValueAt(cliente.getFecha_nac(), i, 7);
+                this.defaultTable.setValueAt(cliente.getDireccion(), i, 8);
+                this.defaultTable.setValueAt(cliente.getTelefono(), i, 9);
+                
             }
             
             EColorTableCell foreColor = new EColorTableCell();
-            foreColor.setColumnIndex(8);
-            tblClientes.getColumnModel().getColumn(8).setCellRenderer(foreColor);
+            foreColor.setColumnIndex(9);
+            tblUsuarios.getColumnModel().getColumn(9).setCellRenderer(foreColor);
             
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex.toString(), Module.titleMessage, JOptionPane.ERROR_MESSAGE);
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -131,103 +112,93 @@ public class FrmListadoClientes extends javax.swing.JFrame implements IFormActiv
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        txtSearch = new javax.swing.JTextField();
-        btnNew = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblClientes = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblUsuarios = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        txtSearch = new javax.swing.JTextField();
+        btnNuevo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Mantenimiento de Roles");
+        setTitle("FrmUsuarios");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        tblUsuarios.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "TIPO USUARIO", "NOMBRES", "USUARIO", "CORREO", "ESTADO"
+            }
+        ));
+        tblUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblUsuariosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblUsuarios);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/buscar.png"))); // NOI18N
+        jLabel1.setText("BUSCAR:");
+
         txtSearch.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtSearch.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtSearchKeyReleased(evt);
             }
         });
 
-        btnNew.setBackground(new java.awt.Color(70, 70, 255));
-        btnNew.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnNew.setForeground(new java.awt.Color(255, 255, 255));
-        btnNew.setText("NUEVO");
-        btnNew.addActionListener(new java.awt.event.ActionListener() {
+        btnNuevo.setBackground(new java.awt.Color(102, 0, 102));
+        btnNuevo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnNuevo.setForeground(new java.awt.Color(255, 255, 255));
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/nuevo-documento.png"))); // NOI18N
+        btnNuevo.setText("NUEVO");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNewActionPerformed(evt);
+                btnNuevoActionPerformed(evt);
             }
         });
-
-        tblClientes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "NOMBRE", "ESTADO"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        tblClientes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblClientesMouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(tblClientes);
-        if (tblClientes.getColumnModel().getColumnCount() > 0) {
-            tblClientes.getColumnModel().getColumn(0).setResizable(false);
-            tblClientes.getColumnModel().getColumn(0).setPreferredWidth(10);
-            tblClientes.getColumnModel().getColumn(1).setResizable(false);
-            tblClientes.getColumnModel().getColumn(2).setResizable(false);
-            tblClientes.getColumnModel().getColumn(2).setPreferredWidth(20);
-        }
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel1.setText("BUSCAR");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(36, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(42, Short.MAX_VALUE))
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(23, 23, 23))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel1)
+                        .addGap(8, 8, 8))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(13, 13, 13)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,6 +207,30 @@ public class FrmListadoClientes extends javax.swing.JFrame implements IFormActiv
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        EForm formActive = Module.formActive;
+        formActive.setCaller(this);
+        Module.id = 0;
+        
+        FrmClientes formcli = new FrmClientes();
+        formcli.setVisible(true);
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void tblUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuariosMouseClicked
+        // TODO add your handling code here:
+        if(evt.getClickCount()==2){
+            int id = (int) tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0);
+            Module.id = id;
+            
+            EForm formActive = Module.formActive;
+            formActive.setCaller(this);
+            
+            FrmClientes formcli = new FrmClientes();
+            formcli.setVisible(true);
+        }
+    }//GEN-LAST:event_tblUsuariosMouseClicked
 
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
         // TODO add your handling code here:
@@ -257,79 +252,23 @@ public class FrmListadoClientes extends javax.swing.JFrame implements IFormActiv
             for (int i = 0; i < arrayList.size(); i++) {
                 EClientes cliente = (EClientes)arrayList.get(i);
                 this.defaultTable.addRow(new Object[]{});
-
                 this.defaultTable.setValueAt(cliente.getId(), i, 0);
-                this.defaultTable.setValueAt(cliente.getTipo_documento(), i, 1);
-                this.defaultTable.setValueAt(cliente.getNum_documento(), i, 2);
-                this.defaultTable.setValueAt(cliente.getNombres(), i, 3);
-                this.defaultTable.setValueAt(cliente.getApellidos(), i, 4);
+                this.defaultTable.setValueAt(cliente.getTipo_cliente(), i, 1);
+                this.defaultTable.setValueAt(cliente.getTipo_documento(), i, 2);
+                this.defaultTable.setValueAt(cliente.getNum_documento(), i, 3);
+                this.defaultTable.setValueAt(cliente.getNombres(), i, 4);
+                this.defaultTable.setValueAt(cliente.getApellidos(), i, 5);
                 this.defaultTable.setValueAt(cliente.getGenero(), i, 5);
-                this.defaultTable.setValueAt(cliente.getFecha_nac(), i, 6);
-                this.defaultTable.setValueAt(cliente.getDireccion(), i, 7);
-                this.defaultTable.setValueAt(cliente.getTelefono(), i, 8);
+                this.defaultTable.setValueAt(cliente.getFecha_nac(), i, 5);
+                this.defaultTable.setValueAt(cliente.getDireccion(), i, 5);
+                this.defaultTable.setValueAt(cliente.getTelefono(), i, 5);
+              
             }
             
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex.toString(), Module.titleMessage, JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_txtSearchKeyReleased
-
-    private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
-        // TODO add your handling code here:
-        EForm formActive = Module.formActive;
-        formActive.setCaller(this);
-     
-        
-//        EClientes cli = Module.rol;
-//        cli.setId(0);
-//        cli.setNombre("");
-//        cli.setEstado("");
-        
-        EClientes cli = Module.cli;
-        cli.setId(0);
-        cli.setNombres("");
-        cli.setApellidos("");
-        
-        FrmClientes formCliente = new FrmClientes();
-        formCliente.setVisible(true);
-       formCliente.pack();
-        //formRoles.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    }//GEN-LAST:event_btnNewActionPerformed
-    
-    private void tblClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientesMouseClicked
-        // TODO add your handling code here:
-        if(evt.getClickCount()==2){
-            int id = (int) tblClientes.getValueAt(tblClientes.getSelectedRow(), 0);
-            String tipo_documento = tblClientes.getValueAt(tblClientes.getSelectedRow(), 1).toString();
-            String numero_documento = tblClientes.getValueAt(tblClientes.getSelectedRow(), 2).toString();
-            String nombres = tblClientes.getValueAt(tblClientes.getSelectedRow(), 3).toString();
-            String apellidos = tblClientes.getValueAt(tblClientes.getSelectedRow(), 4).toString();
-            String genero = tblClientes.getValueAt(tblClientes.getSelectedRow(), 5).toString();
-            String fecha_nacimiento = tblClientes.getValueAt(tblClientes.getSelectedRow(), 6).toString();
-            String direccion = tblClientes.getValueAt(tblClientes.getSelectedRow(), 7).toString();
-            String telefono = tblClientes.getValueAt(tblClientes.getSelectedRow(), 8).toString();
-            
-          
-            
-            EClientes cli = Module.cli;
-            cli.setId(id);
-            cli.setTipo_documento(tipo_documento);
-            cli.setNum_documento(numero_documento);
-            cli.setNombres(nombres);
-            cli.setApellidos(apellidos);
-            cli.setGenero(genero);
-            cli.setFecha_nac(fecha_nacimiento);
-            cli.setDireccion(direccion);
-            cli.setTelefono(telefono);
-            
-            EForm formActive = Module.formActive;
-            formActive.setCaller(this);
-            
-            FrmClientes formCliente = new FrmClientes();
-            formCliente.setVisible(true);
-            formCliente.pack();
-        }
-    }//GEN-LAST:event_tblClientesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -374,11 +313,11 @@ public class FrmListadoClientes extends javax.swing.JFrame implements IFormActiv
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnNew;
+    private javax.swing.JButton btnNuevo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tblClientes;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblUsuarios;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }
