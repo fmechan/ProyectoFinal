@@ -5,13 +5,19 @@
  */
 package Presentacion;
 
+import Negocio.EComboBox;
+import Negocio.EUsuarios;
+import java.util.ArrayList;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import AccesoDatos.Hash;
 import Modelo.Clientes;
 import Modelo.Roles;
+import Modelo.Usuarios;
 import Negocio.EClientes;
-import Negocio.ERoles;
-import javax.swing.JOptionPane;
-
 import java.awt.Color;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
@@ -20,55 +26,86 @@ import javax.swing.border.EmptyBorder;
 
 public class FrmClientes extends javax.swing.JFrame {
     
-    Clientes clsCli = new Clientes();
+    Clientes clscli = new Clientes();
     EForm formActive;
-    private int id;
+    private final int id;
     /**
-     * Creates new form FrmRoles
+     * Creates new form FrmUsuarios
      */
     public FrmClientes() {
         initComponents();
-        
-        this.cboTipoDocumento.addItem("Seleccione");
-        this.cboTipoDocumento.addItem("DNI");
-        this.cboTipoDocumento.addItem("RUC'");
-       
-        
-         this.cboSexo.addItem("Seleccione");
-        this.cboSexo.addItem("MASCULINO");
-        this.cboSexo.addItem("FEMENINO'");
-        
-        
         this.setLocationRelativeTo(this);
         this.setResizable(false);
         
         formActive = Module.formActive;
         
-        EClientes cli = Module.cli;
-        id = cli.getId();
-        this.txtNombres.setText(cli.getNombres());
-        this.txtApellidos.setText(cli.getApellidos());
-        this.cboTipoDocumento.setSelectedItem(cli.getTipo_documento());
-        this.txtNumDocumento.setText(cli.getNum_documento());
-        this.cboSexo.setSelectedItem(cli.getGenero());
-        this.txtFechaNacimiento.setText(cli.getFecha_nac());
-        this.txtDireccion.setText(cli.getDireccion());
-        this.txtTelefono.setText(cli.getTelefono());
-        
-       
-        
-        if(id == 0){
-            this.setTitle("Nuevo Rol");
-        }else{
-            this.setTitle("Editar Rol");
-        }
-        
         Border line = BorderFactory.createLineBorder(Color.DARK_GRAY);
         Border empty = new EmptyBorder(0, 10, 0, 0);
         CompoundBorder border = new CompoundBorder(line, empty);
-        cboTipoDocumento.setBorder(border);
+        txtNombre.setBorder(border);
+        txtApellios.setBorder(border);
+        txtNumero_Documento.setBorder(border);
+        txtDireccion.setBorder(border);
+        txtTelefono.setBorder(border);
+        
+        id = Module.id;
+       // llenarComboTipoUsuario();
+        
+        cboTipo_cliente.addItem("NATURAL ");
+        cboTipo_cliente.addItem("JURIDICA");
+        cboSexo.addItem("M");
+        cboSexo.addItem("F");
+        cboTipo_Documento.addItem("DNI");
+        cboTipo_Documento.addItem("RUC");
+        
+        
+        if(id != 0){
+            try{
+                
+                ArrayList arrayList = clscli.searchById(id);
+                EClientes cliente = (EClientes)arrayList.get(0);
+                
+                
+                this.txtNombre.setText(cliente.getNombres());
+                this.txtApellios.setText(cliente.getApellidos());
+                this.setSelectedValue(cboTipo_cliente, cliente.getTipo_cliente());
+                this.setSelectedValue(cboTipo_Documento, cliente.getTipo_documento());
+                this.txtNumero_Documento.setText(cliente.getNum_documento());
+                this.setSelectedValue(cboSexo, cliente.getGenero());
+                SimpleDateFormat fomatter=new SimpleDateFormat("yyyy-MM-dd");
+                Date Fecha_nac = fomatter.parse(cliente.getFecha_nac());
+                this.dchFechaNac.setDate(Fecha_nac);            
+                this.txtDireccion.setText(cliente.getDireccion());
+                this.txtTelefono.setText(cliente.getTelefono());
+                
+                
+            }catch(Exception ex){
+                JOptionPane.showMessageDialog(null, ex.toString(), Module.titleMessage, JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        
+        if(id == 0){
+            this.setTitle("Nuevo Cliente");
+        }else{
+            this.setTitle("Editar Cliente");
+        }
     }
-
+    
+//    private void llenarComboTipoUsuario(){
+//        Roles clsRol = new Roles();
+//        cbxTipoUsuario.setModel(clsRol.fillCombobox());
+//    }
+    
+    public void setSelectedValue(JComboBox comboBox, String value){
+        EComboBox item;
+        for (int i = 0; i < comboBox.getItemCount(); i++){
+            item = (EComboBox)comboBox.getItemAt(i);
+            if (item.getDescripcion().equalsIgnoreCase(value)){
+                comboBox.setSelectedIndex(i);
+                break;
+            }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -78,229 +115,265 @@ public class FrmClientes extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTextField2 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
-        cboTipoDocumento = new javax.swing.JComboBox<>();
+        txtApellios = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtNumDocumento = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtNombres = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtApellidos = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        cboTipo_Documento = new javax.swing.JComboBox<>();
         cboSexo = new javax.swing.JComboBox<>();
-        jLabel6 = new javax.swing.JLabel();
-        txtFechaNacimiento = new javax.swing.JTextField();
+        dchFechaNac = new com.toedter.calendar.JDateChooser();
         jLabel7 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        cboTipo_cliente = new javax.swing.JComboBox<>();
+        txtNumero_Documento = new javax.swing.JTextField();
+
+        jTextField2.setText("jTextField2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Roles");
+        setTitle("Nuevo Usuario");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel1.setText("TIPO DOCUMENTO :");
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel5.setText("SEXO :");
 
-        btnGuardar.setBackground(new java.awt.Color(70, 70, 255));
-        btnGuardar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel6.setText("FECHA NACIMIENTO");
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setText("APELLIDOS :");
+
+        btnGuardar.setBackground(new java.awt.Color(102, 0, 102));
+        btnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/disco-flexible.png"))); // NOI18N
         btnGuardar.setText("GUARDAR");
         btnGuardar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnGuardar.setBorderPainted(false);
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("NUMERO DE DOCUMENTO :");
+        txtApellios.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtApellios.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel3.setText("NOMBRES :");
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("NOMBRES :");
 
-        jLabel4.setText("APELLIDOS :");
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setText("TIPO DOCUMENTO :");
 
-        jLabel5.setText("SEXO :");
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setText("NUMERO DOCUMENTO :");
 
-        jLabel6.setText("FECHA DE NACIMIENTO :");
-
-        jLabel7.setText("DIRECCION :");
+        jLabel7.setText("DIRECCION : ");
 
         jLabel8.setText("TELEFONO : ");
+
+        jLabel9.setText("TIPO CLIENTE :");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(129, 129, 129))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(32, 32, 32)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(91, 91, 91)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel7))
+                                .addGap(64, 64, 64))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGap(6, 6, 6)
+                                            .addComponent(jLabel9))
+                                        .addComponent(jLabel1)))
+                                .addGap(18, 18, 18)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtApellidos, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
-                            .addComponent(txtNombres))
-                        .addGap(87, 87, 87)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addGap(27, 27, 27)
-                            .addComponent(cboTipoDocumento, 0, 166, Short.MAX_VALUE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel6)
-                                .addComponent(jLabel7)
-                                .addComponent(jLabel8))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtNumDocumento)
-                                .addComponent(cboSexo, 0, 166, Short.MAX_VALUE)
-                                .addComponent(txtFechaNacimiento)
-                                .addComponent(txtDireccion)
-                                .addComponent(txtTelefono)))))
-                .addContainerGap(32, Short.MAX_VALUE))
+                            .addComponent(txtApellios)
+                            .addComponent(cboTipo_Documento, 0, 313, Short.MAX_VALUE)
+                            .addComponent(cboSexo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(dchFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtTelefono, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+                                .addComponent(txtDireccion, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(cboTipo_cliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtNumero_Documento))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(cboTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
+                .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtNumDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel5))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(cboSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(41, 41, 41)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtApellios, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(cboTipo_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(cboTipo_Documento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtNumero_Documento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cboSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
-                    .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jLabel7))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(jLabel8))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(67, Short.MAX_VALUE))
+                    .addComponent(dchFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(58, 58, 58))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
         try{
+            
+           // EComboBox objCombo = (EComboBox) cbxTipoUsuario.getSelectedItem();
+            
+          //  int cbxIdTipo = objCombo.getId();
+            String nombre = this.txtNombre.getText().trim();
+            String apellido = this.txtApellios.getText().trim();
+             String tipo_cliente = this.cboTipo_cliente.getSelectedItem().toString();
+            String tipo_documento = this.cboTipo_Documento.getSelectedItem().toString();
+           String numero_documento = this.txtNumero_Documento.getText().trim();
+            
+           String sexo = this.cboSexo.getSelectedItem().toString();
+            
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String FechaNacStr = formatter.format(dchFechaNac.getDate());
+            
+            String direccion = this.txtDireccion.getText().trim();
+            String telefono = this.txtTelefono.getText().trim();
+            
+           
            
             
-        String nombre =  this.txtNombres.getText();
-        String apellido = this.txtApellidos.getText();
-        String tipodocumento =this.cboTipoDocumento.getSelectedItem().toString();
-        String numerodoc= this.txtNumDocumento.getText();
-        String sexo = this.cboSexo.getSelectedItem().toString();
-        String fechanac =  this.txtFechaNacimiento.getText();
-        String direccion =this.txtDireccion.getText();
-        String telefono =this.txtTelefono.getText();
-        
-            
-            if(txtNombres.equals("")){
-                JOptionPane.showMessageDialog(null, "Ingrese un rol", Module.titleMessage, JOptionPane.CANCEL_OPTION);
-            }else{
+            if(nombre.equals("")){
+                JOptionPane.showMessageDialog(null, "Ingrese su nombre", Module.titleMessage, JOptionPane.CANCEL_OPTION);
+            }else if(nombre.equals("")){
+                JOptionPane.showMessageDialog(null, "Ingrese su apellidos", Module.titleMessage, JOptionPane.CANCEL_OPTION);
+            }
+//            else if(apellido.equals("")){
+//                JOptionPane.showMessageDialog(null, "Ingrese su contraseña", Module.titleMessage, JOptionPane.CANCEL_OPTION);
+//            }
+            else{
+             //   String passwordEncrypt = Hash.encrypt(clave);
+                String message;
                 
                 EClientes objcli = new EClientes();
-                if(id == 0){ //Registramos un nuevo rol
-                    objcli.setNombres(nombre);
-                    objcli.setApellidos(apellido);
-                    objcli.setTipo_documento(tipodocumento);
-                    objcli.setNum_documento(numerodoc);
-                    objcli.setGenero(sexo);
-                    objcli.setFecha_nac(fechanac);
-                    objcli.setDireccion(direccion);
-                    objcli.setTelefono(telefono);
-
-                    String message = clsCli.create(objcli);
+                if(id != 0){
+                    objcli.setId(id);
+                }
+               // objcli.setRolId(cbxIdTipo);
+                 objcli.setNombres(nombre);
+                 objcli.setApellidos(apellido);
+                 objcli.setTipo_cliente(tipo_cliente);
+                 objcli.setTipo_documento(tipo_documento);
+                 objcli.setNum_documento(numero_documento);
+                 objcli.setGenero(sexo);
+                 objcli.setFecha_nac(FechaNacStr);
+                 objcli.setDireccion(direccion);
+                 objcli.setTelefono(telefono);
+                
+                if(id == 0){ //Guardamos un nuevo usuario
+                    message = clscli.create(objcli);
                     if(message.equals("Registrado correctamente")){
-                        JOptionPane.showMessageDialog(null, message, Module.titleMessage, JOptionPane.INFORMATION_MESSAGE);
                         cleanForm();
+                        JOptionPane.showMessageDialog(null, message, Module.titleMessage, JOptionPane.INFORMATION_MESSAGE);
                     }else{
                         JOptionPane.showMessageDialog(null, message, Module.titleMessage, JOptionPane.CANCEL_OPTION);
                     }
                 }else{
-                    objcli.setId(id);
-                    objcli.setNombres(nombre);
-                    objcli.setApellidos(apellido);
-                    objcli.setTipo_documento(tipodocumento);
-                    objcli.setNum_documento(numerodoc);
-                    objcli.setGenero(sexo);
-                    objcli.setFecha_nac(fechanac);
-                    objcli.setDireccion(direccion);
-                    objcli.setTelefono(telefono);
-
-                    String message = clsCli.update(objcli);
+                    message = clscli.update(objcli);
                     if(message.equals("Actualizado correctamente")){
-                        JOptionPane.showMessageDialog(null, message, Module.titleMessage, JOptionPane.INFORMATION_MESSAGE);
                         cleanForm();
                         this.dispose();
+                        JOptionPane.showMessageDialog(null, message, Module.titleMessage, JOptionPane.INFORMATION_MESSAGE);
                     }else{
                         JOptionPane.showMessageDialog(null, message, Module.titleMessage, JOptionPane.CANCEL_OPTION);
                     }
                 }
             }
-        
+            
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex.toString(), Module.titleMessage, JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
     
     private void cleanForm(){
-        txtNombres.setText("");
+       // llenarComboTipoUsuario();
+        txtApellios.setText("");
+        this.txtNombre.setText("");
+        this.txtNumero_Documento.setText("");
+        this.txtDireccion.setText("");
+        this.txtTelefono.setText("");
+        this.cboTipo_cliente.setSelectedItem("ACTIVO");
+        this.cboTipo_Documento.setSelectedItem("ACTIVO");
+        this.cboSexo.setSelectedItem("ACTIVO");
         formActive.getCaller().loadTable();
     }
     /**
@@ -330,6 +403,12 @@ public class FrmClientes extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -342,7 +421,9 @@ public class FrmClientes extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<String> cboSexo;
-    private javax.swing.JComboBox<String> cboTipoDocumento;
+    private javax.swing.JComboBox<String> cboTipo_Documento;
+    private javax.swing.JComboBox<String> cboTipo_cliente;
+    private com.toedter.calendar.JDateChooser dchFechaNac;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -351,12 +432,13 @@ public class FrmClientes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtApellidos;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField txtApellios;
     private javax.swing.JTextField txtDireccion;
-    private javax.swing.JTextField txtFechaNacimiento;
-    private javax.swing.JTextField txtNombres;
-    private javax.swing.JTextField txtNumDocumento;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtNumero_Documento;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }

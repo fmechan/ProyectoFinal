@@ -6,10 +6,11 @@ package Negocio;
 
 /**
  *
- * @author LUIS GUIVAR
+ * @author Usuario
  */
 public class EClientes {
- 
+    
+    
     private int id;
     private String tipo_cliente;
     private String tipo_documento;
@@ -160,8 +161,8 @@ public class EClientes {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-
-   
     
+    
+   
     
 }
